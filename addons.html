@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configure Your Automation Node | AI Automation Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: var(--bg-dark);
+      padding-bottom: 100px;
+    }
+    .config-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(10, 10, 15, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+    }
+    .config-header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .addons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 40px 0;
+    }
+    .addon-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+    .addon-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .addon-card.selected {
+      background: var(--primary-dim);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+    .addon-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .addon-title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .addon-price {
+      font-family: var(--font-mono);
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .addon-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .category-title {
+      margin-top: 40px;
+      margin-bottom: 20px;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+    .action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(18, 18, 26, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border-color);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+    .total-price {
+      font-size: 24px;
+      font-family: var(--font-mono);
+      color: white;
+    }
+    .total-price span {
+      color: var(--text-muted);
+      font-size: 14px;
+      font-family: var(--font-sans);
+    }
+    /* Checkbox visual */
+    .check-ring {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border-color);
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .addon-card.selected .check-ring {
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+    .addon-card.selected .check-ring::after {
+      content: '';
+      width: 8px;
+      height: 4px;
+      border-left: 2px solid #000;
+      border-bottom: 2px solid #000;
+      transform: rotate(-45deg);
+      margin-top: -2px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="config-header">
+    <div class="container">
+      <h1>Configure Your AI Infrastructure</h1>
+      <p style="color: var(--text-muted);">Select the specialized tools and autonomous agents you need. Review options before booking your deployment call.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2 class="category-title">Voice & Communication Agents</h2>
+    <div class="addons-grid" id="grid-communication">
+      <!-- Generated via JS -->
+    </div>
+
+    <h2 class="category-title">Workflow & Data Automation</h2>
+    <div class="addons-grid" id="grid-workflow">
+      <!-- Generated via JS -->
+    </div>
+
+    <h2 class="category-title">Content & Social Media</h2>
+    <div class="addons-grid" id="grid-content">
+      <!-- Generated via JS -->
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <div class="total-price">
+      <span>Estimated Monthly:</span> $<span id="calc-total">0</span>
+    </div>
+    <a href="https://cal.com/smartcontentsf" class="btn btn-primary btn-lg" id="proceed-btn">
+      Proceed to Deployment Calendar
+    </a>
+  </div>
+
+  <script>
+    const addons = [
+      { cat: 'communication', name: 'Inbound Customer Service Agent', price: 299, desc: 'AI agent answers all inbound calls, checks order statuses, and handles basic troubleshooting.' },
+      { cat: 'communication', name: 'Outbound Cold Calling Bot', price: 499, desc: 'Auto-dialer that runs 24/7, uses Retell AI, handles objections, and pushes leads to CRM.' },
+      { cat: 'communication', name: 'SMS Follow-up Engine', price: 99, desc: 'Automated 14-day text message sequences for cold leads and abandoned carts.' },
+      { cat: 'communication', name: 'AI Email Triage', price: 149, desc: 'Sorts inbound emails, auto-replies to FAQs, and flags urgent messages to human team.' },
+      
+      { cat: 'workflow', name: 'Custom CRM Integration (Zapier/Make)', price: 199, desc: 'Direct webhook connections feeding all AI data back into your HubSpot or Salesforce.' },
+      { cat: 'workflow', name: 'Automated Proposal Generator', price: 250, desc: 'Crawls call transcripts and instantly generates a highly-converting PDF contract ready for signature.' },
+      { cat: 'workflow', name: 'Competitor Scraping Script', price: 300, desc: 'Daily automated scrape of up to 5 competitors for pricing changes and new ad creatives.' },
+      { cat: 'workflow', name: 'Invoice & Accounting Sync', price: 150, desc: 'Auto-creates QuickBooks invoices whenever a Stripe payment drops or proposal is signed.' },
+      
+      { cat: 'content', name: 'Faceless Short-Form Video Generator', price: 399, desc: 'Automatically generates 30 aesthetic reels/TikToks per month using Google Veo and CapCut drops.' },
+      { cat: 'content', name: 'LinkedIn Auto-Poster & Engager', price: 199, desc: 'Drafts thought-leadership posts based on your industry and automatically replies to comments.' },
+      { cat: 'content', name: 'SEO Blog Writer (10 Posts/mo)', price: 299, desc: 'Generates 10 keyword-optimized, 1,500-word articles per month directly injected into your CMS.' },
+      { cat: 'content', name: 'AI Image Vault Connection', price: 99, desc: 'Monthly refresh of 100 Midjourney/Imagen 3 branded assets for your marketing team.' }
+    ];
+
+    let total = 0;
+
+    function renderAddons() {
+      ['communication', 'workflow', 'content'].forEach(category => {
+        const grid = document.getElementById('grid-' + category);
+        const items = addons.filter(a => a.cat === category);
+        
+        items.forEach((item, index) => {
+          const el = document.createElement('div');
+          el.className = 'addon-card';
+          el.innerHTML = `
+            <div class="addon-header">
+              <div class="addon-title">${item.name}</div>
+              <div class="addon-price">+$${item.price}</div>
+            </div>
+            <div class="addon-desc">${item.desc}</div>
+            <div class="check-ring"></div>
+          `;
+          
+          el.addEventListener('click', () => {
+            el.classList.toggle('selected');
+            if (el.classList.contains('selected')) {
+              total += item.price;
+            } else {
+              total -= item.price;
+            }
+            document.getElementById('calc-total').innerText = total;
+          });
+          
+          grid.appendChild(el);
+        });
+      });
+    }
+
+    renderAddons();
+  </script>
+</body>
+</html>
